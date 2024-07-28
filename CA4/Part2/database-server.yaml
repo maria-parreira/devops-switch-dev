@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database-server
+spec:
+    containers:
+      - name: database
+        image: db
+        ports:
+          - containerPort: 8082
+          - containerPort: 9092
+        env:
+          - name: H2_OPTIONS
+            value: "-tcp -tcpAllowOthers -ifNotExists"  # Configurações específicas do H2
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        imagePullPolicy: Never
+

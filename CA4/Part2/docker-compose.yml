@@ -1,0 +1,32 @@
+version: '3'  # Specify the version of the Docker Compose file format
+
+services:  # Define the services that make up the application
+
+  db:  # Define the database service
+    build:  # Build the Docker image for the database service
+      context: .  # Use the current directory as the build context
+      dockerfile: DockerfileDb  # Specify the Dockerfile to use for building the database image
+    container_name: database  # Name the container as "database"
+    ports:  # Map the container's ports to the host
+      - "8082:8082"  # Map port 8082 on the host to port 8082 in the container (for H2 console)
+      - "9092:9092"  # Map port 9092 on the host to port 9092 in the container (for H2 database connections)
+    environment:  # Set environment variables for the container
+      - H2_OPTIONS=-tcp -tcpAllowOthers -ifNotExists  # Configure H2 database options to allow TCP connections
+    volumes:  # Define volumes to persist data
+      - h2-data:/opt/h2-data  # Mount the "h2-data" volume to /opt/h2-data in the container to persist H2 database data
+
+  web:  # Define the web application service
+    build:  # Build the Docker image for the web service
+      context: .  # Use the current directory as the build context
+      dockerfile: DockerfileWeb  # Specify the Dockerfile to use for building the web application image
+    container_name: spring-web-application  # Name the container as "spring-web-application"
+    ports:  # Map the container's ports to the host
+      - "8080:8080"  # Map port 8080 on the host to port 8080 in the container (for the Spring Boot application)
+    environment:  # Set environment variables for the container
+      - SPRING_DATASOURCE_URL=jdbc:h2:tcp://database:9092/./jpadb  # Configure Spring Boot to use the H2 database hosted in the "database" container
+    depends_on:  # Specify service dependencies
+      - db  # Ensure the "db" service starts before the "web" service to ensure the database is available
+
+volumes:  # Define named volumes to persist data outside of containers
+  h2-data:  # Define the "h2-data" volume
+    driver: local  # Use the local volume driver to store data on the host filesystem

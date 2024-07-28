@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url:'https://github.com/mariaparreira-code/devops-23-24-JPE-1231843.git'
+            }
+        }
+
+        stage('Assemble') {
+            steps {
+                dir('CA2.Part1') {
+                    sh './gradlew assemble'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('CA2.Part1') {
+                    sh './gradlew test'
+                }
+            }
+            post {
+                always {
+                    junit '**/build/test-results/**/*.xml'
+                }
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
+            }
+        }
+    }
+}
