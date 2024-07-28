@@ -4,8 +4,8 @@ services:  # Define the services that make up the application
 
   db:  # Define the database service
     build:  # Build the Docker image for the database service
-      context: .  # Use the current directory as the build context
-      dockerfile: DockerfileDb  # Specify the Dockerfile to use for building the database image
+      context: ..  # Use the current directory as the build context
+      dockerfile: ../DataBase/DockerfileDb  # Specify the Dockerfile to use for building the database image
     container_name: database  # Name the container as "database"
     ports:  # Map the container's ports to the host
       - "8082:8082"  # Map port 8082 on the host to port 8082 in the container (for H2 console)
@@ -17,8 +17,8 @@ services:  # Define the services that make up the application
 
   web:  # Define the web application service
     build:  # Build the Docker image for the web service
-      context: .  # Use the current directory as the build context
-      dockerfile: DockerfileWeb  # Specify the Dockerfile to use for building the web application image
+      context: ..  # Use the current directory as the build context
+      dockerfile: ../Web/DockerfileWeb  # Specify the Dockerfile to use for building the web application image
     container_name: spring-web-application  # Name the container as "spring-web-application"
     ports:  # Map the container's ports to the host
       - "8080:8080"  # Map port 8080 on the host to port 8080 in the container (for the Spring Boot application)

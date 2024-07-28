@@ -104,35 +104,35 @@ docker build -t db -f DockerfileDb .
 ```yml
 version: '3'  # Specify the version of the Docker Compose file format
 
-services:  # Define the services that make up the application
+services: # Define the services that make up the application
 
-  db:  # Define the database service
-    build:  
+  db: # Define the database service
+    build:
       context: .  # Use the current directory as the build context
-      dockerfile: DockerfileDb  
+      dockerfile: DataBase/Dockerfile
     container_name: database  # Name the container as "database"
-    ports:  # Map the container's ports to the host
+    ports: # Map the container's ports to the host
       - "8082:8082"  # Map port 8082 on the host to port 8082 in the container (for H2 console)
       - "9092:9092"  # Map port 9092 on the host to port 9092 in the container (for H2 database connections)
-    environment:  # Set environment variables for the container
+    environment: # Set environment variables for the container
       - H2_OPTIONS=-tcp -tcpAllowOthers -ifNotExists  # Configure H2 database options to allow TCP connections
-    volumes:  
+    volumes:
       - h2-data:/opt/h2-data  # Mount the "h2-data" volume to /opt/h2-data in the container to persist H2 database data
 
-  web:  # Define the web application service
-    build: 
+  web: # Define the web application service
+    build:
       context: .  # Use the current directory as the build context
-      dockerfile: DockerfileWeb  # Specify the Dockerfile to use for building the web application image
-    container_name: spring-web-application 
-    ports: 
+      dockerfile: Web/Dockerfile  # Specify the Dockerfile to use for building the web application image
+    container_name: spring-web-application
+    ports:
       - "8080:8080"  # Map port 8080 on the host to port 8080 in the container (for the Spring Boot application)
-    environment: 
+    environment:
       - SPRING_DATASOURCE_URL=jdbc:h2:tcp://database:9092/./jpadb  # Configure Spring Boot to use the H2 database hosted in the "database" container
-    depends_on:  # Specify service dependencies
+    depends_on: # Specify service dependencies
       - db  # Ensure the "db" service starts before the "web" service to ensure the database is available
-      
+
 volumes:
-  h2-data:  
+  h2-data:
     driver: local
 ```
 - Docker Compose simplifies the deployment of multi-container Docker applications by allowing users to define and manage all required services in a single file. 
