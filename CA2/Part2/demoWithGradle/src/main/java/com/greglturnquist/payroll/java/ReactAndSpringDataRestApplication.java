@@ -1,5 +1,5 @@
 
-package com.greglturnquist.payroll;
+package com.greglturnquist.payroll.java;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

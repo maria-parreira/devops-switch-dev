@@ -1,4 +1,4 @@
-package basic_demo;
+package basic_demo.java;
 
 /**
  * A simple app that launches a multithreaded chat room server. 

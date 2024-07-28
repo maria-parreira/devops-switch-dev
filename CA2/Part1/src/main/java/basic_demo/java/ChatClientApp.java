@@ -1,4 +1,4 @@
-package basic_demo;
+package basic_demo.java;
 
 
 /**

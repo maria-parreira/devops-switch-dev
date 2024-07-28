@@ -1,4 +1,4 @@
-package basic_demo;
+package basic_demo.java;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
