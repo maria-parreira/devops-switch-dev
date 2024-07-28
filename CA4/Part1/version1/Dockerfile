@@ -1,9 +1,6 @@
 # Use the base image from OpenJDK
 FROM openjdk:17-jdk-slim
 
-# Author of the Dockerfile
-LABEL author="mariaparreira-code"
-
 # Install Git
 RUN apt-get update && apt-get install -y git
 
