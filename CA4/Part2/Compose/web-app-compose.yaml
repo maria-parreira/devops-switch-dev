@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+
+  h2database:
+    image: buildo/h2database
+    ports:
+      - "8083:8082"
+    environment:
+      - H2_OPTIONS=-tcp -tcpAllowOthers -ifNotExists  # Configure H2 database options to allow TCP connections
+
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-application
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:tcp://database:8083/./jpadb
+    depends_on:
+      - h2database

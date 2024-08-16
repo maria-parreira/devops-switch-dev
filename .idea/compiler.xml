@@ -13,6 +13,7 @@
       <module name="demo" target="17" />
       <module name="demo.main" target="17" />
       <module name="demo.test" target="17" />
+      <module name="react-and-spring-data-rest" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
