@@ -3,7 +3,10 @@ version: '3.8'
 services:
 
   h2database:
-    image: buildo/h2database
+    build:
+      context: .
+      dockerfile: DockerfileDb
+    container_name: h2database
     ports:
       - "8083:8082"
     environment:
@@ -12,11 +15,13 @@ services:
   web-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: DockerfileWeb
     container_name: web-application
     ports:
-      - "8081:8080"
+      - "9000:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:h2:tcp://database:8083/./jpadb
+      - SPRING_DATASOURCE_URL=jdbc:h2:tcp://h2database:8082/./jpadb
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=123
     depends_on:
       - h2database
