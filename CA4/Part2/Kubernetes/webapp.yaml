@@ -18,9 +18,9 @@ spec:
     spec:
       containers:
       - name: webapp
-        image:
+        image: maria1231483/web-app:1.0
         ports:
-          - containerPort:
+          - containerPort: 8080
 ---
 
 apiVersion: v1
@@ -32,5 +32,5 @@ spec:
     app: webapp
   ports:
     - protocol: TCP
-      port: # port we choose
-      targetPort: #same as container port
+      port: 8085 #port we choose
+      targetPort: 8080 # same as container port
