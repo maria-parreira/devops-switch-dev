@@ -1,4 +1,4 @@
-#deployment and service
+#deployment and service web app
 
 apiVersion: apps/v1
 kind: Deployment
@@ -22,7 +22,6 @@ spec:
         ports:
           - containerPort: 8080
 ---
-
 apiVersion: v1
 kind: Service
 metadata:

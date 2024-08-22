@@ -1,4 +1,5 @@
-#deployment and service
+#deployment and service database
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,6 +21,9 @@ spec:
           image: maria1231483/h2database:1.0
           ports:
             - containerPort: 8082
+          env:
+            - name: H2_OPTIONS
+              value: "-tcp -tcpAllowOthers -ifNotExists"
 ---
 apiVersion: v1
 kind: Service
