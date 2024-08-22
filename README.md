@@ -46,18 +46,16 @@ The assignments are divided into five folders, each representing tasks with diff
 
 ### Part 1 Objective [see](CA4/Part1)
 
-- The first part of this assignment aimed to practice using Docker by creating Docker images and running containers with the chat application from CA2. 
-- The objective was to package and run the chat server in a container. 
+- The first part of this assignment aimed to practice using Docker by creating Docker images and running containers with the chat application from CA2.
 - I created a Docker image using a Dockerfile, tagged the image, and published it on Docker Hub. 
 - I ensured the chat client could run on my host computer and connect to the chat server in the container. 
 - Additionally, I explored Docker image concepts by creating two versions: one where the chat server was built inside the Dockerfile, and another where it was built on the host computer and the JAR file was copied into the Dockerfile.
 
 ### Part 2 Objective [see](CA4/Part2)
 
-- The second part of this assignment aimed to use Docker to set up a containerized environment for my version of the Gradle-based Spring basic tutorial application. 
-- I needed to create a solution similar to the previous assignment's part 2 but using Docker instead of Vagrant. 
-- I used docker-compose to create two services/containers: web (running Tomcat and the Spring application) and db (running the H2 server database). 
+- The second part of this assignment aimed to use docker-compose to create two services/containers: web (running the SpringBoot application) and database (running the H2 server). 
 - The task included publishing the images to Docker Hub and using a volume with the db container to copy the database file.
+- Also in this part I used Kubernetes and create YAML files to define and manage the deployment of applications and databases in a cluster.
 
 ## Class Assignment 5
 
