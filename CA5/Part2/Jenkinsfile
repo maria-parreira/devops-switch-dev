@@ -80,7 +80,7 @@ pipeline {
                         FROM gradle:jdk21
                         WORKDIR /app
                         COPY build/libs/demo-0.0.1-SNAPSHOT.jar app.jar
-                        EXPOSE 8080
+                        EXPOSE 8090
                         ENTRYPOINT ["java", "-jar", "app.jar"]
                         """
                         writeFile file: 'Dockerfile', text: dockerfileContent
@@ -109,7 +109,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running Docker container...'
-                    sh "docker run -d -p 8080:8080 ${DOCKER_IMAGE}:latest"
+                    sh "docker run -d -p 8090:8090 ${DOCKER_IMAGE}:latest"
                 }
             }
         }
