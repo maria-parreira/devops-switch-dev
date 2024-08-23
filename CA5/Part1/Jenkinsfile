@@ -1,4 +1,5 @@
 pipeline {
+
     agent any
 
     stages {
@@ -8,10 +9,10 @@ pipeline {
             }
         }
 
-        stage('Assemble') {
+        stage('Build') {
             steps {
                 dir('CA2.Part1') {
-                    sh './gradlew assemble'
+                    sh './gradlew build'
                 }
             }
         }

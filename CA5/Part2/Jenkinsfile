@@ -1,9 +1,10 @@
 pipeline {
+
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-credentials'
-        DOCKER_IMAGE = 'maria1231483/ca2-part2-jenkins'
+        DOCKER_CREDENTIALS_ID = 'dockerhub'
+        DOCKER_IMAGE = 'mariaparreira/webapp'
         DOCKER_TAG = "${env.BUILD_ID}"
     }
 
@@ -11,25 +12,25 @@ pipeline {
         stage('Checkout') {
              steps {
                  echo 'Checking out code from the repository'
-                 git branch: 'main', url: 'https://github.com/mariaparreira-code/devops-23-24-JPE-1231843.git'
+                 git branch: 'main', url: 'https://github.com/maria-parreira/devops-switch-dev.git'
                }
         }
 
         stage('Set Permissions') {
             steps {
-                dir('Ca2.Part2/demoWithGradle') {
+                dir('Ca2/Part2/demoWithGradle') {
                     echo 'Setting executable permissions on gradlew...'
                     sh 'chmod +x gradlew'
                 }
             }
         }
 
-        stage('Assemble') {
+        stage('Build') {
             steps {
                 retry(3) {
-                    dir('CA2.Part2/demoWithGradle') {
-                        echo 'Assembling the application...'
-                        sh './gradlew assemble'
+                    dir('CA2/Part2/demoWithGradle') {
+                        echo 'Build the application...'
+                        sh './gradlew build'
                     }
                 }
             }
@@ -37,8 +38,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('CA2.Part2/demoWithGradle') {
-                    echo 'Running unit tests...'
+                dir('CA2/Part2/demoWithGradle') {
+                    echo 'Running tests...'
                     sh './gradlew test'
                 }
             }
@@ -46,7 +47,7 @@ pipeline {
 
         stage('Javadoc') {
             steps {
-                dir('Ca2.Part2/demoWithGradle') {
+                dir('Ca2/Part2/demoWithGradle') {
                     echo 'Generating Javadoc...'
                     sh './gradlew javadoc'
                     publishHTML(target: [
@@ -63,16 +64,17 @@ pipeline {
 
         stage('Archive') {
             steps {
-                dir('Ca2.Part2/demoWithGradle') {
+                dir('Ca2/Part2/demoWithGradle') {
                     echo 'Archiving artifacts...'
                     archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
                 }
             }
         }
 
-        stage('Create Dockerfile') {
+        stage('Create Docker image') {
             steps {
-                dir('Ca2.Part2/demoWithGradle') {
+                dir('Ca2/Part2/demoWithGradle') {
+                    echo 'Creating docker image...'
                     script {
                         def dockerfileContent = """
                         FROM gradle:jdk21
@@ -87,21 +89,12 @@ pipeline {
             }
         }
 
-        stage('Verify Docker Context') {
-            steps {
-                script {
-                    echo 'Verifying Docker contexts...'
-                    sh 'docker context ls'
-                    sh 'docker context use default'
-                }
-            }
-        }
-
          stage('Publish Image') {
                     steps {
+                    echo 'Publishing docker image...'
                         script {
                             docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
-                                dir('Ca2.Part2/demoWithGradle') {
+                                dir('Ca2/Part2/demoWithGradle') {
                                     def customImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                                     customImage.push()
                                     customImage.push('latest')
@@ -109,7 +102,7 @@ pipeline {
                             }
                         }
                     }
-                }
+         }
 
         stage('Run Container') {
             steps {
@@ -120,4 +113,18 @@ pipeline {
             }
         }
     }
-}
+
+      post {
+            always {
+                cleanWs()
+            }
+            success {
+                echo 'Pipeline successfully completed!'
+            }
+            failure {
+                echo 'Pipeline failed!'
+            }
+      }
+
+    }
+
