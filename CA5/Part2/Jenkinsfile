@@ -18,7 +18,7 @@ pipeline {
 
         stage('Set Permissions') {
             steps {
-                dir('Ca2/Part2/demoWithGradle') {
+                dir('CA2/Part2/demoWithGradle') {
                     echo 'Setting executable permissions on gradlew...'
                     sh 'chmod +x gradlew'
                 }
@@ -47,7 +47,7 @@ pipeline {
 
         stage('Javadoc') {
             steps {
-                dir('Ca2/Part2/demoWithGradle') {
+                dir('CA2/Part2/demoWithGradle') {
                     echo 'Generating Javadoc...'
                     sh './gradlew javadoc'
                     publishHTML(target: [
@@ -64,7 +64,7 @@ pipeline {
 
         stage('Archive') {
             steps {
-                dir('Ca2/Part2/demoWithGradle') {
+                dir('CA2/Part2/demoWithGradle') {
                     echo 'Archiving artifacts...'
                     archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
                 }
@@ -73,7 +73,7 @@ pipeline {
 
         stage('Create Docker image') {
             steps {
-                dir('Ca2/Part2/demoWithGradle') {
+                dir('CA2/Part2/demoWithGradle') {
                     echo 'Creating docker image...'
                     script {
                         def dockerfileContent = """
