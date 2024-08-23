@@ -93,7 +93,7 @@ pipeline {
                     steps {
                     echo 'Publishing docker image...'
                         script {
-                            docker.withRegistry('https://hub.docker.com/u/mariaparreira', "${DOCKER_CREDENTIALS_ID}") {
+                            docker.withRegistry('https://hub.docker.com/', "${DOCKER_CREDENTIALS_ID}") {
 
                                 dir('CA2/Part2/demoWithGradle') {
                                     def customImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
