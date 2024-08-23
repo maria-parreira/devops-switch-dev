@@ -61,10 +61,10 @@ The assignments are divided into five folders, each representing tasks with diff
 
 ### Objective [see](CA5)
 
-- For this assignment, I practiced Continuous Integration/Continuous Deployment (CI/CD) with Jenkins, using the "gradle basic demo" project. 
-- I set up a Jenkins pipeline in my private repository to automate the build, test, and deployment process. The pipeline stages included checking out the code, assembling the project, running tests, generating Javadoc, archiving artifacts, and publishing a Docker image to Docker Hub.
+- For this assignment, I practiced Continuous Integration/Continuous Deployment (CI/CD) with Jenkins.
+- I set up a Jenkins pipeline in my public repository to automate the build, test, and deployment process. The pipeline stages included checking out the code, assembling the project, running tests, generating Javadoc, archiving artifacts, and publishing a Docker image to Docker Hub.
 - The setup involved installing Jenkins, configuring necessary plugins, and managing credentials for accessing private repositories. 
-- I explored advanced integrations between Jenkins and Docker, using docker-compose to automate service creation. 
+- I explored advanced integrations between Jenkins and Docker.
 - This assignment emphasized the importance of comprehensive documentation and frequent commits to the repository, ensuring a well-documented and iterative development process.
 
 ---
