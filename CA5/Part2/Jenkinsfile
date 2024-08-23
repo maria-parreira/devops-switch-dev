@@ -89,6 +89,16 @@ pipeline {
             }
         }
 
+         stage('Verify Docker Context') {
+                    steps {
+                        script {
+                            echo 'Verifying Docker contexts...'
+                            sh 'docker context ls'
+                            sh 'docker context use default'
+                        }
+                    }
+        }
+
          stage('Publish Image') {
                     steps {
                     echo 'Publishing docker image...'
