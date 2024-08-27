@@ -44,22 +44,23 @@ docker-compose up
 
 ### **Goal:** run and connect multiple containers simultaneously using kubernetes .yaml files
 
-- Run the following command to apply the [h2.yaml](Kubernetes/h2.yaml) configuration to your Kubernetes cluster:
-
+- Run the following commands to apply the [h2.yaml](Kubernetes/h2.yaml) configuration to your Kubernetes cluster:
+- This command will create the Deployment and Service defined in the database YAML file.
+- [h2-config.yaml](Kubernetes/h2-config.yaml) store configurations and environment variables that are used by Pods without modifying the code.
+- [h2-secret.yaml](Kubernetes/h2-secret.yaml) is is used to store sensitive information, such as passwords.
+- 
 ```bash
+kubectl apply h2-config.yaml
+kubectl apply h2-secret.yaml
 kubectl apply -f h2.yaml
 ```
 
-- This command will create the Deployment and Service defined in the database YAML file.
-
 - Run the following command to apply the [webapp.yaml](Kubernetes/webapp.yaml) configuration to your Kubernetes cluster:
+- This command will create the Deployment and Service defined in the web application YAML file.
 
 ```bash
 kubectl apply -f webapp.yaml
 ```
-
-- This command will create the Deployment and Service defined in the web application YAML file.
-
 
 - Check the status of the deployment to ensure the Pods are created and running:
 
@@ -79,16 +80,54 @@ kubectl get pods
 kubectl get services
 ```
 
+## SetUp Kubernetes dashboard 
+
+-The Kubernetes Dashboard is a web-based user interface that allows you to manage and monitor your Kubernetes clusters.
+
+- Run the following command to create a service account with [admin-user.yaml](Kubernetes/admin-user.yaml):
+
+```
+kubectl apply -f admin-user.yaml
+```
+
+- Run command to generate a token and copy the result:
+```
+kubectl -n kubernetes-dashboard create token admin-user
+```
+
+- Run command the following command to create a local proxy that connects to the Kubernetes API server:
+- This allows you to access resources and services within the Kubernetes cluster via a local HTTP connection without exposing them publicly.
+```
+kubectl proxy
+```
+
+- Open this link http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+- Paste token result on enter token
+
+## My Results
+
+![dashboard.png](Kubernetes/images/dashboard.png)
+![dash.png](Kubernetes/images/dash.png)
+![result.png](Kubernetes/images/result.png)
+
 ## Key Concepts
 
 ### Pod
 
-- The smallest and simplest Kubernetes object. A Pod can contain one or more containers that share the same network and storage.
+- The smallest and simplest Kubernetes object. 
+- Pods are used to host containerized applications.
+- A Pod can contain one or more containers that share the same network.
 - Containers within a Pod run on the same node and have access to the same IP address and storage volumes.
 - Ideal for running a single service or task.
-- 
+
 ### Deployment
 
 - Deployment is a resource that manages the creation and updates of Pods. 
 - It ensures a desired number of Pods are running at any time and facilitates updates and scaling.
 - It uses an update strategy to replace old Pods with new ones, maintaining service availability.
+
+### Service
+
+- A Service is a Kubernetes object that provides a stable network endpoint to access a set of Pods.
+- It abstracts and exposes the underlying Pods to ensure that network access remains consistent despite changes in Pod IP addresses.
+- Services allow Pods to communicate with each other and with external clients reliably.
