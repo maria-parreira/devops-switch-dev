@@ -7,15 +7,9 @@ This is a technical report for de Class Assignment 1 about **Version Contrl** (a
 
 This report provides a detailed account of the steps taken to complete the assignment, including the commands used, the issues encountered, and the solutions implemented.
 
-The report is divided into two sections:
-
-1.Git Tutorial (divided in part 1 and 2)
-
-2.Analysis of an Alternative Version Control Solution: Subversion
-
 To support this assignment will be used an example application : Tutorial React.js and Spring Data REST.
 
-(source code available at https://github.com/spring-guides/tut-react-and-spring-data-rest)
+[source code available here](https://github.com/spring-guides/tut-react-and-spring-data-rest)
 
 
 
@@ -287,67 +281,3 @@ git tag -a ca1-part2 -m "ca1-part2 released"
 ```bash
 push origin --tags
 ```
-
-## Analysis of an Alternative Version Control Solution: Subversion
-
-This following section provides an analysis of Subversion (SVN) as an alternative version control solution to Git, focusing on its features, differences from Git, and its application to the assignment goals.
-It was not implemented in the assignment.
-
-Like Git, SVN allows several people to work simultaneously on the same project, controlling versions and changes efficiently.
-
-However, unlike git, SVN is a centralized version control system, which means that there can only be a single main repository on the server and the developers can only interact with that copy. 
-All the changes will be directly pushed and merged into this main repository. We need an internet connection to work with SVN.
-The basic difference between the workflow of Git and SVN is summarised by the following illustration.
-
-
-![git vs svn.png](basic/images/svn.png)
-from: https://www.studytonight.com/git-guide/git-vs-svn
-
-### _Applying Mercurial to the Assignment Goals_
-
-To achieve the same goals as presented in this assignment using Subversion, follow a workflow with some differences in commands and concepts:
-
-1. **Repository Initialization**:
-
-   1.1.Create an empty folder with the name svn, which is used as root for all your repository
-
-   1.2.Create another folder my_repository inside svn
-
-   1.3.Open the terminal and type
-```
-svnadmin create /home/user/svn/my_repository
-```
-2. **Clone remote repository**:
-```
-svn checkout https://example.com/svn/project local_project
-```
-3. **Add new files**:
-```
-svn add foo.cs
-```
-4. **Check the status of files and directories in the working copy**: 
-```
-svn status
-```
-5. **Commit your local changes to the repository**:
-```
-svn commit -m "My Descriptive Log Message"
-```
-6. **Tag Versions**:
-```
-svn copy -r 1234 ^/MyProject/trunk ^/MyProject/tags/version-1.2
-```
-In this specific case, the -r argument was used to indicate that the tag should be created from revision 1234 of the trunk.
-
-7. **Branch for Features and Fixes**:
-Creat a new branch requires you to run the command against the remote repository's URLs: 
-```
-svn copy https://svn.example.com/svn/MyRepo/MyProject/trunk https://svn.example.com/svn/MyRepo/MyProject/branches/MyNewBranch -m "Creating a new branch"
-```
-Check out a new working copy with the new branch or switch your existing working copy using:
-```
-svn switch
-```
-Subversion doesn't make any distinction between a tag and a branch. The only difference is in how you decide to use them. 
-Traditionally, no commits are made to a tag once it has been created (to ensure that it remains an accurate "snapshot" of a past repository state). 
-Subversion doesn't enforce any special tag-related rules by default since different people can use tags differently. 
