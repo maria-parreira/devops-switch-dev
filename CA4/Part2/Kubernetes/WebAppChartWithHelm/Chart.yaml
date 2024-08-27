@@ -1,0 +1,4 @@
+apiVersion: v2
+name: my-web-app
+description: A Helm chart for a simple web application
+version: 1.0.0
