@@ -17,10 +17,27 @@ spec:
         app: webapp
     spec:
       containers:
-      - name: webapp
-        image: maria1231483/web-app:1.0
-        ports:
-          - containerPort: 8080
+        - name: webapp
+          image: maria1231483/web-app:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: h2-config
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: h2-secret
+                  key: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: h2-secret
+                  key: password
+
 ---
 apiVersion: v1
 kind: Service
@@ -31,5 +48,5 @@ spec:
     app: webapp
   ports:
     - protocol: TCP
-      port: 8085 #port we choose
+      port: 8080 #port we choose
       targetPort: 8080 # same as container port

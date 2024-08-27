@@ -4,4 +4,4 @@ kind: ConfigMap
 metadata:
   name: h2-config
 data:
-  h2-url: "h2-service"
+  SPRING_DATASOURCE_URL: "jdbc:h2:tcp://h2-service:9092/./jpadb"

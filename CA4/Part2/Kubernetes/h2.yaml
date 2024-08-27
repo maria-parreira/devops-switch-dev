@@ -7,7 +7,7 @@ metadata:
   labels:
     app: h2
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: h2
@@ -20,10 +20,9 @@ spec:
         - name: h2
           image: maria1231483/h2database:1.0
           ports:
+            - containerPort: 9092
             - containerPort: 8082
-          env:
-            - name: H2_OPTIONS
-              value: "-tcp -tcpAllowOthers -ifNotExists"
+
 ---
 apiVersion: v1
 kind: Service
@@ -34,5 +33,5 @@ spec:
     app: h2
   ports:
     - protocol: TCP
-      port: 8084 # port we choose
+      port: 8082 # port we choose
       targetPort: 8082 #same as container port
