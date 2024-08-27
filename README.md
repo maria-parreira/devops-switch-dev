@@ -20,7 +20,7 @@ The assignments are divided into five folders, each representing tasks with diff
 - I downloaded and committed the example application from the provided link into my repository under CA2/Part1. 
 - I read the instructions, experimented with the application, added a new task to execute the server, created a simple unit test, updated the Gradle script to run the test, and created tasks to back up the source files and create a zip archive of the source files.
 
-### Part 2 Objective [see](CA2/Part2/demoWithGradle)
+### Part 2 Objective [see](CA2/Part2)
 
 - This part aimed to develop practical skills in using GitHub for issue tracking and Gradle for build automation by converting a basic version of a tutorial application from Maven to Gradle. 
 - I created a new branch `tut-basic-gradle`, initialized a Gradle Spring Boot project, and replaced its source files with those from the basic tutorial. 

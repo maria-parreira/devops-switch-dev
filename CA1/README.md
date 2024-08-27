@@ -3,7 +3,7 @@
 ## Introduction
 
 
-This is a technical report for de Class Assignment 1 about **Version Contrl** (a crucial practice in managing software development projects), made by Maria Parreira n.º 1231843, ISEP and Switch student.
+This is a technical report for de Class Assignment 1 about **Version Control** (a crucial practice in managing software development projects), made by Maria Parreira n.º 1231843, ISEP and Switch student.
 
 This report provides a detailed account of the steps taken to complete the assignment, including the commands used, the issues encountered, and the solutions implemented.
 
